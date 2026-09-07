@@ -195,6 +195,55 @@ services:
 
     networks:
       - infra
+  
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    restart: unless-stopped
+    ports:
+      - "9002:8123"
+      - "9003:9000"
+
+    environment:
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ${CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT}
+
+    volumes:
+      - ./clickhouse_data:/var/lib/clickhouse
+      - ./clickhouse_logs:/var/logs/clickhouse-server
+
+    networks:
+      - infra
+
+  # dockgraph:
+  #   image: dockgraph/dockgraph:latest
+  #   ports:
+  #     - "7800:7800"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   labels:
+  #     dockgraph.self: "true"
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+    command: server /data --console-address ":9001"
+
+    volumes:
+      - ./minio-data:/data
+
 
 networks:
   infra:
