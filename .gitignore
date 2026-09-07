@@ -7,6 +7,7 @@ rabbitmq-data
 mysql-data
 redis-data
 qdrant-data
+minio-data
 
 *.db
 clickhouse_data
