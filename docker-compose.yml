@@ -125,35 +125,6 @@ services:
     networks:
       - infra
 
-  # infisical:
-  #   image: infisical/infisical:latest
-  #   container_name: infisical
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - postgres
-  #     - redis
-
-  #   env_file:
-  #     - .env
-
-  #   environment:
-  #     NODE_ENV: production
-
-  #     # Infisical database
-  #     DB_CONNECTION_URI: ${INFISICAL_DB_CONNECTION_URI}
-  #     # Redis
-  #     REDIS_URL: redis://redis:6379
-  #     ENCRYPTION_KEY: ${ENCRYPTION_KEY}
-  #     AUTH_SECRET: ${AUTH_SECRET}
-  #     SITE_URL: ${SITE_URL}
-
-
-  #   ports:
-  #     - "9000:8080"
-
-  #   networks:
-  #     - infra
-
   volume-init:
     image: alpine
     command: ["sh", "-c", "echo 'CIFS volumes initialized'"]
@@ -177,36 +148,6 @@ services:
 
     networks:
       - infra
-  
-  clickhouse:
-    image: clickhouse/clickhouse-server:latest
-    container_name: clickhouse
-    restart: unless-stopped
-    ports:
-      - "9002:8123"
-      - "9003:9000"
-
-    environment:
-      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
-      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
-      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
-      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ${CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT}
-
-    volumes:
-      - ./clickhouse_data:/var/lib/clickhouse
-      - ./clickhouse_logs:/var/logs/clickhouse-server
-
-    networks:
-      - infra
-
-  # dockgraph:
-  #   image: dockgraph/dockgraph:latest
-  #   ports:
-  #     - "7800:7800"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #   labels:
-  #     dockgraph.self: "true"
 
   minio:
     image: quay.io/minio/minio:latest
@@ -225,6 +166,10 @@ services:
 
     volumes:
       - minio-data:/data
+    
+    networks:
+      - infra
+
 
 
 networks:
@@ -283,4 +228,4 @@ volumes:
       device: "${OLD_FILES_CIFS_DEVICE}"
       o: "username=${CIFS_USERNAME},password=${CIFS_PASSWORD},vers=3.0"
   
-
+  tailscale-state:

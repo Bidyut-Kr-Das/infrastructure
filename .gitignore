@@ -12,3 +12,4 @@ minio-data
 *.db
 clickhouse_data
 clickhouse-logs
+postgres-backups

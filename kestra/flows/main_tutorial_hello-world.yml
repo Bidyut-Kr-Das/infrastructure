@@ -2,7 +2,7 @@ id: hello-world
 namespace: tutorial
 labels:
   name: Hello World
-
+ 
 triggers:
   - id: daily
     type: io.kestra.plugin.core.trigger.Schedule

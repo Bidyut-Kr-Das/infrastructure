@@ -32,6 +32,8 @@ DATABASES=(
 "quotation-backup"
 "ceebuild-items"
 "tender-executive-dashboard-production"
+"gmd_gem_ids"
+
 )
 
 # ===========================

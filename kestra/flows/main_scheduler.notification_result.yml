@@ -1,14 +1,14 @@
-﻿
+
 id: postgres_database_backup
 namespace: scheduler
 
 triggers:
   - id: daily
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "0 */3 * * *"
-    timezone: Asia/Kolkata
-    recoverMissedSchedules: LAST
-
+    cron: "0 */3 * * *" 
+    timezone: Asia/Kolkata 
+    recoverMissedSchedules: LAST    
+ 
 tasks: 
   - id: backup_postgres_databases
     type: io.kestra.plugin.scripts.shell.Commands
